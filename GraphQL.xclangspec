@@ -1,0 +1,496 @@
+// GraphQL
+(
+
+/****************************************************************************/
+// MARK: Lexers and Tokens
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.lexer";
+        Syntax = {
+            IncludeRules = (
+              "xcode.lang.graphql.comment",
+              "xcode.lang.graphql.insignificant-comma",
+              "xcode.lang.graphql.punctuators",
+              "xcode.lang.graphql.variable",
+              "xcode.lang.graphql.name",
+              "xcode.lang.number",
+              "xcode.lang.string",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.name";
+        Syntax = {
+            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+            Words = (
+                "true",
+                "false",
+                "query",
+                "mutation",
+                "subscription",
+                "fragment",
+                "on",
+            );
+            Type = "xcode.syntax.keyword";
+            AltType = "xcode.syntax.name";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.punctuators";
+        Syntax = {
+            Words = (
+                "...",
+            );
+            Type = "xcode.syntax.plain";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.insignificant-comma";
+        Syntax = {
+            Words = (
+                ",",
+            );
+            Type = "xcode.syntax.comment";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.comment";
+        Syntax = {
+            Start = "#";
+            End = "\n";
+            IncludeRules = ( "xcode.lang.url", "xcode.lang.url.mail", "xcode.lang.comment.mark" );
+            Type = "xcode.syntax.comment";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.variable";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer.variable";
+            StartChars = "$";
+            Rules = (
+              "$",
+              "xcode.lang.graphql.name",
+            );
+            Type = "xcode.syntax.attribute";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.lexer.variable";
+        Syntax = {
+            IncludeRules = (
+              "xcode.lang.graphql.insignificant-comma",
+              "xcode.lang.graphql.name",
+            );
+        };
+    },
+
+/****************************************************************************/
+// MARK: Top-Level
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql";
+        Description = "GraphQL Coloring";
+        IncludeInMenu = YES;
+        UsesCLikeIndentation = YES;
+        Name = "GraphQL";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            IncludeRules = (
+                "xcode.lang.graphql.operation.definition",
+                "xcode.lang.graphql.operation.definition.shorthand",
+                "xcode.lang.graphql.fragment.definition",
+            );
+            Type = "xcode.syntax.plain";
+        };
+    },
+
+/****************************************************************************/
+// MARK: Operations
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.operation.definition";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.operation.type",
+              "xcode.lang.graphql.operation.name",
+              "xcode.lang.graphql.variable.definitions?",
+              "xcode.lang.graphql.directives?",
+              "xcode.lang.graphql.selectionset",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.operation.definition.shorthand";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.selectionset",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.operation.type";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "query|mutation|subscription",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.operation.name";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.name",
+            );
+            Type = "xcode.syntax.identifier.variable";
+        };
+    },
+
+/****************************************************************************/
+// MARK: Selection Sets
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.selectionset";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Start = "{";
+            End = "}";
+            Foldable = YES;
+            Recursive = YES;
+            IncludeRules = (
+              "xcode.lang.graphql.field",
+              "xcode.lang.graphql.fragmentspread",
+              "xcode.lang.graphql.inlinefragment",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.field";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.field.alias?",
+              "xcode.lang.graphql.field.name",
+              "xcode.lang.graphql.arguments?",
+              "xcode.lang.graphql.directives?",
+              "xcode.lang.graphql.selectionset?",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.field.alias";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.name",
+              ":",
+            );
+            Type = "xcode.syntax.identifier";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.field.name";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.name",
+            );
+            Type = "xcode.syntax.identifier.function";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.fragmentspread";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "...",
+              "xcode.lang.graphql.fragment.name",
+              "xcode.lang.graphql.directives?",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.inlinefragment";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "...",
+              "on",
+              "xcode.lang.graphql.type",
+              "xcode.lang.graphql.directives?",
+              "xcode.lang.graphql.selectionset",
+            );
+        };
+    },
+
+/****************************************************************************/
+// MARK: Fragments
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.fragment.definition";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "fragment",
+              "xcode.lang.graphql.fragment.name",
+              "on",
+              "xcode.lang.graphql.type",
+              "xcode.lang.graphql.directives?",
+              "xcode.lang.graphql.selectionset",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.fragment.name";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.name",
+            );
+            Type = "xcode.syntax.identifier.variable";
+        };
+    },
+
+/****************************************************************************/
+// MARK: Variable definitions
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.variable.definitions";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Start = "(";
+            End = ")";
+            Foldable = NO;
+            Recursive = NO;
+            IncludeRules = (
+              "xcode.lang.graphql.variable.definition",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.variable.definition";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.variable",
+              ":",
+              "xcode.lang.graphql.type",
+              "xcode.lang.graphql.variable.default-value?",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.variable.default-value";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "=",
+              "xcode.lang.graphql.value",
+            );
+        };
+    },
+
+/****************************************************************************/
+// MARK: Arguments
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.arguments";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Start = "(";
+            End = ")";
+            Foldable = NO;
+            Recursive = NO;
+            IncludeRules = (
+              "xcode.lang.graphql.argument",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.argument";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.argument.name",
+              ":",
+              "xcode.lang.graphql.value",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.argument.name";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.name",
+            );
+            Type = "xcode.syntax.identifier";
+        };
+    },
+
+/****************************************************************************/
+// MARK: Values
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.value";
+        Syntax = {
+          Tokenizer = "xcode.lang.graphql.lexer";
+          // These rules should be OR, but using "|" doesn't seem to work
+          Rules = (
+            "xcode.lang.graphql.value.enum?",
+            "xcode.lang.graphql.variable?",
+            "xcode.lang.graphql.value.boolean?",
+            "xcode.lang.string?",
+            "xcode.lang.number?",
+            "xcode.lang.graphql.value.list?",
+            "xcode.lang.graphql.value.object?",
+          );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.value.boolean";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "true|false",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.value.enum";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.name",
+            );
+            Type = "xcode.syntax.identifier.constant";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.value.list";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Start = "[";
+            End = "]";
+            Foldable = NO;
+            Recursive = YES;
+            IncludeRules = (
+              "xcode.lang.graphql.value",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.value.object";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Start = "{";
+            End = "}";
+            Foldable = NO;
+            Recursive = YES;
+            IncludeRules = (
+              "xcode.lang.graphql.value.object.field",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.value.object.field";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.name",
+              ":",
+              "xcode.lang.graphql.value",
+            );
+        };
+    },
+
+/****************************************************************************/
+// MARK: Types
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.type";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.name",
+              "!?"
+            );
+            Type = "xcode.syntax.identifier.type";
+        };
+    },
+
+/****************************************************************************/
+// MARK: Directives
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.graphql.directives";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "xcode.lang.graphql.directive+",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.directive";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            StartChars = "@";
+            Rules = (
+              "xcode.lang.graphql.directive.name",
+              "xcode.lang.graphql.arguments",
+            );
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.graphql.directive.name";
+        Syntax = {
+            Tokenizer = "xcode.lang.graphql.lexer";
+            Rules = (
+              "@",
+              "xcode.lang.graphql.name",
+            );
+            Type = "xcode.syntax.preprocessor";
+        };
+    },
+)
