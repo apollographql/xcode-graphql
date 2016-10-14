@@ -24,14 +24,14 @@
 					</dict>
 				</array>
 				<key>typeIdentifier</key>
-				<string>org.graphql.graphql-source</string>
+				<string>public.graphql-source</string>
 				<key>version</key>
 				<string>1.0</string>
 			</dict>
 			<key>Xcode.FileDataTypeDetector.GraphQL</key>
 			<dict>
 				<key>detectedTypeIdentifier</key>
-				<string>org.graphql.graphql-source</string>
+				<string>public.graphql-source</string>
 				<key>id</key>
 				<string>Xcode.FileDataTypeDetector.GraphQL</string>
 				<key>matchesExtension</key>
@@ -59,7 +59,7 @@
 				<array>
 					<dict>
 						<key>identifier</key>
-						<string>org.graphql.graphql-source</string>
+						<string>public.graphql-source</string>
 					</dict>
 				</array>
 				<key>id</key>
