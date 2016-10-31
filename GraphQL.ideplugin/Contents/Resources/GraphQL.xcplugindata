@@ -20,7 +20,7 @@
 				<array>
 					<dict>
 						<key>typeIdentifier</key>
-						<string>public.plain-text</string>
+						<string>public.source-code</string>
 					</dict>
 				</array>
 				<key>typeIdentifier</key>
