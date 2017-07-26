@@ -15,7 +15,7 @@
               "xcode.lang.graphql.variable",
               "xcode.lang.graphql.name",
 
-              // built-in tyupes
+              // built-in types
               "xcode.lang.number",
               "xcode.lang.string",
               "xcode.lang.comment.singleline.pound",
