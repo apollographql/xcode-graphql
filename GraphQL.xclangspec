@@ -9,13 +9,16 @@
         Identifier = "xcode.lang.graphql.lexer";
         Syntax = {
             IncludeRules = (
-              "xcode.lang.graphql.comment",
+              // graphQL types
               "xcode.lang.graphql.insignificant-comma",
               "xcode.lang.graphql.punctuators",
               "xcode.lang.graphql.variable",
               "xcode.lang.graphql.name",
+
+              // built-in tyupes
               "xcode.lang.number",
               "xcode.lang.string",
+              "xcode.lang.comment.singleline.pound",
             );
         };
     },
@@ -55,16 +58,6 @@
             Words = (
                 ",",
             );
-            Type = "xcode.syntax.comment";
-        };
-    },
-
-    {
-        Identifier = "xcode.lang.graphql.comment";
-        Syntax = {
-            Start = "#";
-            End = "\n";
-            IncludeRules = ( "xcode.lang.url", "xcode.lang.url.mail", "xcode.lang.comment.mark" );
             Type = "xcode.syntax.comment";
         };
     },
