@@ -5,7 +5,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.apollostack.xcode.graphql</string>
+	<string>com.apollographql.xcode.graphql</string>
 	<key>CFBundleName</key>
 	<string>GraphQL Xcode Plug-in</string>
 	<key>CFBundleShortVersionString</key>
