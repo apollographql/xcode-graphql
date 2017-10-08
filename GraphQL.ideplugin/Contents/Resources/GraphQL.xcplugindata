@@ -75,6 +75,21 @@
 				<key>version</key>
 				<string>1.0</string>
 			</dict>
+			<key>Xcode.IDEKit.Inspector.FileIdentityAndType.public.graphql-source</key>
+			<dict>
+				<key>fileDataType</key>
+				<string>public.graphql-source</string>
+				<key>group</key>
+				<string>Xcode.IDEKit.Inspector.FileInspectorTypeGroup.Sourcecode.Various</string>
+				<key>id</key>
+				<string>Xcode.IDEKit.Inspector.FileIdentityAndType.public.graphql-source</string>
+				<key>name</key>
+				<string>File Inspector Entry - GraphQL Query Document</string>
+				<key>point</key>
+				<string>Xcode.IDEKit.FileInspectorTypeGroupEntry</string>
+				<key>version</key>
+				<string>0.1</string>
+			</dict>
 		</dict>
 	</dict>
 </dict>
