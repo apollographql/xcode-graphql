@@ -1,0 +1,66 @@
+(
+	{
+		Type = FileType;
+		Identifier = "sourcecode.graphql";
+		BasedOn = sourcecode;
+		Name = "GraphQL source files";
+		Extensions = (
+			graphql,
+		);
+		ComputerLanguage = graphql;
+		Language = "xcode.lang.graphql";
+		AppliesToBuildRules = YES;
+		UTI = "public.graphql-source";
+	},
+	{
+		Type = Compiler;
+		Identifier = "com.apollographql.codegen";
+		Name = "Apollo GraphQL Codegen";
+		Description = "Generates Swift files from GraphQL schema and query documents.";
+		CommandLine = "apollo-codegen generate [inputs] --output [output] [options]";
+		RuleName = "ApolloCodegen [inputs] [output]";
+		InputFileTypes = (
+			"sourcecode.graphql",
+		);
+		OutputPath = "${DerivedFilesDir}/ApolloGenerated";
+		InputFileGroupings = (
+			tool,
+		);
+		Outputs = (
+			// How do you specify a list of input files here?
+			"${OutputPath}/${InputFileBase}.graphql.swift",
+			"${OutputPath}/Types.graphql.swift",
+		);
+		ExecDescription = "Generate Swift source files for GraphQL query documents";
+		ProgressDescription = "Generating Swift source files for GraphQL query documents";
+		IsArchitectureNeutral = YES;
+		SynthesizeBuildRule = YES;
+		CommandOutputParser = (
+			("()()^warning: (.*)",  emit-warning),
+			("()()^error: (.*)",  emit-error),
+			(
+				"^([^:]*):([^:]*): warning: (.*)$",
+				"emit-warning",
+			),
+			(
+				"^([^:]*):([^:]*): error: (.*)$",
+				"emit-error",
+			),
+		);
+		EnvironmentVariables = {
+			CONFIGURATION = "$(CONFIGURATION)";
+			XCODE_VERSION_ACTUAL = "${XCODE_VERSION_ACTUAL}";
+			FRAMEWORK_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
+		};
+		Options = (
+      {
+					Name = "GRAPHQL_SCHEMA_FILE";
+					DisplayName = "GraphQL Schema File";
+          Type = Path;
+					DefaultValue = "${SRCROOT}/${TARGET_NAME}/schema.json";
+          CommandLineFlag = "--schema";
+          IsInputDependency = Yes;
+      },
+		);
+  }
+)
