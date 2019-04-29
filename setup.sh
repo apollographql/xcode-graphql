@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -o xtrace
+
 plugins_dir=~/Library/Developer/Xcode/Plug-ins/
 spec_dir=~/Library/Developer/Xcode/Specifications
 
