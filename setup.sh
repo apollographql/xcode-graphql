@@ -17,3 +17,5 @@ fi
 
 cp -r GraphQL.ideplugin $plugins_dir
 cp GraphQL.xclangspec $spec_dir
+
+echo '🎉 Apollo Xcode Add-ons installation has completed! Please close and re-open Xcode.'
