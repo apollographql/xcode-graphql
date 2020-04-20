@@ -2,6 +2,7 @@
 
 set -o xtrace
 
+xcode_contents_dir=$(dirname "$(xcode-select -p)")
 
 # Create plug-ins directory if it doesn't exist
 plugins_dir=~/Library/Developer/Xcode/Plug-ins/
@@ -13,7 +14,7 @@ fi
 cp -r GraphQL.ideplugin $plugins_dir
 
 # Create Specifications directory if it doesn't exist
-spec_dir=/Applications/Xcode.app/Contents/SharedFrameworks/SourceModel.framework/Versions/A/Resources/LanguageSpecifications
+spec_dir="${xcode_contents_dir}/SharedFrameworks/SourceModel.framework/Versions/A/Resources/LanguageSpecifications"
 if [ ! -d "$spec_dir" ]; then
 	mkdir $spec_dir
 fi
@@ -22,7 +23,7 @@ fi
 cp GraphQL.xclangspec $spec_dir
 
 # Create the language metadata directory if it doesn't exist
-metadata_dir=/Applications/Xcode.app/Contents/SharedFrameworks/SourceModel.framework/Versions/A/Resources/LanguageMetadata
+metadata_dir="${xcode_contents_dir}/SharedFrameworks/SourceModel.framework/Versions/A/Resources/LanguageMetadata"
 if [ ! -d "$metadata_dir" ]; then
 	mkdir $metadata_dir
 fi
