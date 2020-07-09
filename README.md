@@ -8,31 +8,58 @@ Since Apple started code-signing Xcode with Xcode 9, Xcode plugins are indeed [m
 
 However, there are a few small, limited purposes for which they still work, including recognizing particular file types as tied to particular languages, which is what this plugin allows Xcode to do.
 
-## Installation
+## Installation via script
 
-**NOTE**: This requires some mucking around with files provided directly by Xcode due to some [changes to undocumented APIs for adding syntax highlighting in Xcode 11](https://github.com/apollographql/xcode-graphql/issues/23). Apple friends, please see FB7321565 for further details. 
-
-This all works as Xcode of 11.3, but be aware that it's a bit more fragile than we'd like it to be. Please file an issue on this repo if it stops working in a new version and we'll investigate. 
-
-### Setup script
-
-If you're running Xcode 11 or higher, the fastest way to install is to `cd` into the directory where this repo has been checked out or downloaded, and run the following command in your terminal:
-
-```
-sudo ./setup.sh
-```
-
-Particularly if you are running Catalina, you will need to use `sudo` in order to make this work due to changes in the permissions model.
+The fastest way to install is to `cd` into the directory where this repo has been checked out or downloaded, and run one of the included install scripts.
 
 Once the setup script has finished, restart Xcode and click the "Load bundle" button on the permissions dialog that appears in Xcode when it restarts. 
 
-### Manual installation
+### Anything other than Xcode 11
 
-Due to the aforementioned changes in APIs, manual installation works slightly differently for Xcode 11 and up vs. 10 and lower. 
+The script to run for versions of Xcode other than 11.x is `setup.sh`: 
 
-**Note**: On Catalina you may need to `sudo` to get these commands to work. 
+```
+./setup.sh
+```
 
-### Xcode 11 and Higher
+### Xcode 11
+
+> **NOTE**: This requires some mucking around with files provided directly by Xcode due to some [bugs for adding syntax highlighting in Xcode 11](https://github.com/apollographql/xcode-graphql/issues/23). These issues are addressed as of Xcode 12 beta 2. 
+>
+> This all works as Xcode of 11.5, but be aware that it's a bit more fragile than we'd like it to be. Please file an issue on this repo if it stops working in a new version and we'll investigate. 
+
+The script to run for versions of Xcode other than 11.x is `setup.sh`: 
+
+```
+sudo ./setup-xcode11.sh
+```
+
+Particularly if you are running Catalina, **you will need to use `sudo`** in order to make this work due to changes in the permissions model.
+
+
+## Manual installation
+
+Due to the aforementioned broken APIs, manual installation works slightly differently for Xcode 11 vs. other versions. 
+
+### Anything other than Xcode 11
+
+Please note that the `Plug-ins` and `Specifications` directories might not exist, and if they don't, you'll need to create them.
+
+- Copy the `GraphQL.ideplugin` directory to `~/Library/Developer/Xcode/Plug-ins/`:
+
+	```
+	cp -r GraphQL.ideplugin ~/Library/Developer/Xcode/Plug-ins/
+	```
+- Copy the `GraphQL.xclangspec` file to `~/Library/Developer/Xcode/Specifications`:
+
+	```
+	cp GraphQL.xclangspec ~/Library/Developer/Xcode/Specifications/
+	```
+
+
+### Xcode 11
+
+**Note**: On Catalina you will need to `sudo` to get these commands to work. 
 
 - Copy the `GraphQL.ideplugin` directory to `~/Library/Developer/Xcode/Plug-ins/`:
 
@@ -51,17 +78,3 @@ Due to the aforementioned changes in APIs, manual installation works slightly di
 cp Xcode.SourceCodeLanguage.GraphQL.plist /Applications/Xcode.app/Contents/SharedFrameworks/SourceModel.framework/Versions/A/Resources/LanguageMetadata
 ```
 
-### Versions of Xcode prior to 11
-
-Please note that if you are running Xcode 8 the `Plug-ins` and `Specifications` directories might not exist.
-
-- Copy the `GraphQL.ideplugin` directory to `~/Library/Developer/Xcode/Plug-ins/`:
-
-	```
-	cp -r GraphQL.ideplugin ~/Library/Developer/Xcode/Plug-ins/
-	```
-- Copy the `GraphQL.xclangspec` file to `~/Library/Developer/Xcode/Specifications`:
-
-	```
-	cp GraphQL.xclangspec ~/Library/Developer/Xcode/Specifications/
-	```
