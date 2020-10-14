@@ -14,9 +14,11 @@ fi
 cp -r GraphQL.ideplugin $plugins_dir
 
 # Create Specifications directory if it doesn't exist
-spec_dir=~/Library/Developer/Xcode/Specifications
+spec_dir=~/Library/Developer/Xcode/Specifications/
 if [ ! -d "$spec_dir" ]; then
 	mkdir $spec_dir
 fi
+
+cp GraphQL.xclangspec $spec_dir
 
 echo '🎉 Apollo Xcode Add-ons installation has completed! Please restart Xcode and click "Load bundle" when an alert shows about GraphQL.ideplugin.'
