@@ -74,6 +74,17 @@
 				<string>Xcode.SourceCodeLanguage</string>
 				<key>version</key>
 				<string>1.0</string>
+				<key>supportsIndentation</key>
+				<true/>
+				<key>allowWhitespaceTrimming</key>
+				<true/>
+				<key>requiresHardTabs</key>
+				<false/>
+				<key>indentationTriggers</key>
+				<array>
+					<string>{</string>
+					<string>}</string>
+				</array>
 			</dict>
 			<key>Xcode.IDEKit.Inspector.FileIdentityAndType.public.graphql-source</key>
 			<dict>
