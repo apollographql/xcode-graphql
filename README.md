@@ -2,11 +2,11 @@
 
 These add-ons add syntax highlighting for GraphQL query document files to Xcode.
 
-## Xcode Compatibility
+## Wait, aren't Xcode plugins dead?
 
-Since Apple started code-signing Xcode with Xcode 9, Xcode plugins are [mostly dead](https://www.imdb.com/title/tt0093779/characters/nm0000345). However, there are a few small, limited purposes for which they still work, including recognizing particular file types as tied to particular languages, which is what this plugin allows Xcode to do.
+Since Apple started code-signing Xcode with Xcode 9, Xcode plugins are indeed [mostly dead](https://www.imdb.com/title/tt0093779/characters/nm0000345). 
 
-This tool is still built on that old plugin architecture and while it has continued to work beyond Xcode 9, **it is not compatible with Xcode 15**. The future for this tooling is to be redesigned as an Xcode Extension. However that is not on our roadmap and we do not have a timeline to share.
+However, there are a few small, limited purposes for which they still work, including recognizing particular file types as tied to particular languages, which is what this plugin allows Xcode to do.
 
 ## Installation via script
 
@@ -77,3 +77,20 @@ Please note that the `Plug-ins` and `Specifications` directories might not exist
 ```
 cp Xcode.SourceCodeLanguage.GraphQL.plist /Applications/Xcode.app/Contents/SharedFrameworks/SourceModel.framework/Versions/A/Resources/LanguageMetadata
 ```
+
+## How to update this plugin for new versions of Xcode
+
+1. Install the new version of Xcode. 
+2. Get the UUID of the version using the following command in Terminal: 
+    
+    `defaults read /Applications/Xcode.app/Contents/Info DVTPlugInCompatibilityUUID`
+    
+    or, for beta versions,
+    
+    `defaults read /Applications/Xcode-beta.app/Contents/Info DVTPlugInCompatibilityUUID`
+3. Copy the UUID. 
+4. Paste the UUID into the list of `DVTPlugInCompatibilityUUIDs` in `Graphql.ideplugin/Contents/Info.plist`. Do not remove any old IDs, just add the new one. 
+5. Reinstall the plugin using whatever method you were using above. You will need to restart Xcode to validate that your changes worked. 
+6. If it worked, submit a pull request with this change. If it didn't work, please file an issue. 
+   
+Note that most UUIDs change from the beta to the final version, so we do not recommend adding UUIDs for betas except during "beta season" of an upcoming major release. 
